@@ -13,6 +13,8 @@ interface Recipe {
 }
 
 export default function RecipeListPage() {
+  const API_PORT = process.env.NEXT_PUBLIC_API_PORT || "4000";
+  const API_BASE_URL = `http://localhost:${API_PORT}`;
   const [recipies, setRecipies] = useState<Recipe[]>([]);
   const [filter, setFilter] = useState('country');
   const [query, setQuery] = useState('');
@@ -31,7 +33,7 @@ export default function RecipeListPage() {
   }, [router.isReady]);
 
   const fetchRecipies = async (filterKey?: string, queryValue?: string) => {
-    let url = 'http://localhost:4000/recipe/list';
+    let url = `${API_BASE_URL}/recipe/list`;
 
     if (filterKey && queryValue) {
       const queryParam = new URLSearchParams({ [filterKey]: queryValue });

@@ -13,6 +13,8 @@ interface Recipe {
 }
 
 export default function Info() {
+  const API_PORT = process.env.NEXT_PUBLIC_API_PORT || "4000";
+  const API_BASE_URL = `http://localhost:${API_PORT}`;
   const router = useRouter();
   const { idMeal } = router.query;
 
@@ -27,7 +29,7 @@ export default function Info() {
 
   const fetchRecipe = async (idMeal: string) => {
     try {
-      const url = `http://localhost:4000/recipe/info/${idMeal}`;
+      const url = `${API_BASE_URL}recipe/info/${idMeal}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
@@ -40,7 +42,7 @@ export default function Info() {
   const fetchCategoryRecipes = async (category: string) => {
     try {
       const queryParam = new URLSearchParams({ category });
-      const url = `http://localhost:4000/recipe/list?${queryParam.toString()}`;
+      const url = `${API_BASE_URL}/recipe/list?${queryParam.toString()}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       const data = await res.json();
